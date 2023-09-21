@@ -1,7 +1,7 @@
 package rotas
 
 import (
-	"api/src/router/controllers"
+	"api/src/controllers"
 	"net/http"
 )
 
@@ -9,7 +9,7 @@ var rotasAudit = []Rota{
 	{
 		URI: "/audit",
 		Metodo: http.MethodPost,
-		Funcao: controllers.CriarAudit,
+		Funcao: controllers.CreateAudit,
 		RequerAuth: false,
 	},
 	{
