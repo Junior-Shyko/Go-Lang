@@ -28,10 +28,12 @@ type Audit struct {
 
 //NewAuditRepository cria um repo de audit
 func NewAuditRepository(database *mongo.Database) *AuditRepository {
+	
 	return &AuditRepository{database}
 }
 //Create insere dados no banco de dados
-func (repo AuditRepository) Create(audit models.Audit) {
+func (repo AuditRepository) Create(audit models.Audit) (error) {
+	fmt.Println(repo.database)
 	coll := repo.database.Collection("audit")
 	// coll := client.Database("db").Collection("books")
 	doc := Audit{
@@ -54,5 +56,6 @@ func (repo AuditRepository) Create(audit models.Audit) {
 	// 	fmt.Printf("Inserted document with _id: %v\n", id)
 	// }
 	newID := result.InsertedID
-	fmt.Println("InsertOne() newID:", newID)
+	fmt.Printf("Inserted document with _id: %v\n", newID)
+	return nil
 }

@@ -1,7 +1,10 @@
 package controllers
 
 import (
-	"api/src/repositories"
+	// "go.mongodb.org/mongo-driver/bson"
+	"context"
+	"fmt"
+	// "api/src/repositories"
 	"log"
 	"api/src/database"
 	"encoding/json"
@@ -22,14 +25,20 @@ func CreateAudit(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	db, err := database.ConectionDataBase()
+	client, err := database.ConectionDataBase()
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	repo := repositories.NewAuditRepository(db)
-	message := repositories.Create(audit)
-	w.Write([]byte(message))
+	coll := client.Database("admin").Collection("audit")
+	result, err := coll.InsertOne(context.TODO(), audit)
+	// repo := repositories.NewAuditRepository(coll)
+	// err = repo.Create(audit)
+	fmt.Print(err)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(result.InsertedID)
+	// w.Write([]byte("Id inserido: %d", usuarioId))
 	
 }
 //Buscando dados de auditoria
