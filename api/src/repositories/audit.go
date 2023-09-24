@@ -34,9 +34,10 @@ func NewAuditRepository(database *mongo.Database) *AuditRepository {
 //Create insere dados no banco de dados
 func (repo AuditRepository) Create(audit models.Audit) (*interface{}, error) {
 	fmt.Println(repo.database)
+	//setando a collection
 	coll := repo.database.Collection("audit")
-	// coll := client.Database("db").Collection("books")
-	doc := Audit{
+	//populando dados para inserir
+	aud := Audit{
 		UserId: audit.UserId,
 		ObjectId: audit.ObjectId,
 		ObjectType: audit.ObjectType,
@@ -46,16 +47,12 @@ func (repo AuditRepository) Create(audit models.Audit) (*interface{}, error) {
 		Key: audit.Key,
 		Value: audit.Value,
 	}
-	// doc := []audit.UserId
-	result, err := coll.InsertOne(context.TODO(), doc)
+	//metodo para inserir
+	result, err := coll.InsertOne(context.TODO(), aud)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	// for _, id := range result.InsertedIDs {
-	// 	fmt.Printf("Inserted document with _id: %v\n", id)
-	// }
-	newID := result.InsertedID
-	// fmt.Printf("Inserted document with _id: %v\n", newID)
-	return &newID, nil
+	//retornando ID
+	return &result.InsertedID, nil
 }
