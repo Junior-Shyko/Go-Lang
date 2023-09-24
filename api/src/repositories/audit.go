@@ -32,7 +32,7 @@ func NewAuditRepository(database *mongo.Database) *AuditRepository {
 	return &AuditRepository{database}
 }
 //Create insere dados no banco de dados
-func (repo AuditRepository) Create(audit models.Audit) (error) {
+func (repo AuditRepository) Create(audit models.Audit) (*interface{}, error) {
 	fmt.Println(repo.database)
 	coll := repo.database.Collection("audit")
 	// coll := client.Database("db").Collection("books")
@@ -56,6 +56,6 @@ func (repo AuditRepository) Create(audit models.Audit) (error) {
 	// 	fmt.Printf("Inserted document with _id: %v\n", id)
 	// }
 	newID := result.InsertedID
-	fmt.Printf("Inserted document with _id: %v\n", newID)
-	return nil
+	// fmt.Printf("Inserted document with _id: %v\n", newID)
+	return &newID, nil
 }

@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"api/src/response"
+	"github.com/gin-gonic/gin"
 	// "go.mongodb.org/mongo-driver/bson"
-	"context"
-	"fmt"
-	// "api/src/repositories"
+	// "context"
+	// "fmt"
+	"api/src/repositories"
 	"log"
 	"api/src/database"
 	"encoding/json"
@@ -14,8 +16,10 @@ import (
 )
 
 //Cria registro de auditoria
-func CreateAudit(w http.ResponseWriter, r *http.Request) {
-	bodyRequest, err := ioutil.ReadAll(r.Body)
+// func CreateAudit(w http.ResponseWriter, r *http.Request) {
+func CreateAudit(c *gin.Context) {
+	
+	bodyRequest, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,14 +34,16 @@ func CreateAudit(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	// ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
-	coll := client.Database("admin").Collection("audit")
-	result, err := coll.InsertOne(context.Background(), audit)
-	// repo := repositories.NewAuditRepository(client)
-	// err = repo.Create(audit)
+	
+	// result, err := coll.InsertOne(context.Background(), audit)
+	repo := repositories.NewAuditRepository(client)
+	result, err := repo.Create(audit)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(result.InsertedID)
+	// fmt.Print(result.InsertedID)
+	// c.JSON(http.StatusOK, gin.H{"message" : "Inserido com sucesso " });
+	response.JSON(c, http.StatusOK, result )
 	
 	// w.Write([]byte("Id inserido: %d", usuarioId))
 	

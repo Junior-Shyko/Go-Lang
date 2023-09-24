@@ -14,7 +14,7 @@ const uri = "mongodb://localhost:27017"
 var collection *mongo.Collection
 var ctx = context.TODO()
 
-func ConectionDataBase() (*mongo.Client, error) {
+func ConectionDataBase() (*mongo.Database, error) {
 	// Use the SetServerAPIOptions() method to set the Stable API version to 1
 	// serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	// opts := options.Client().ApplyURI(uri).SetServerAPIOptions(serverAPI)
@@ -29,9 +29,9 @@ func ConectionDataBase() (*mongo.Client, error) {
 		fmt.Println("mongo.Connect() ERROR:", err)
 		log.Fatal(err)
 	}
-	
+	coll := client.Database("admin")
 
-	return client, nil
+	return coll, nil
 	// Send a ping to confirm a successful connection
 	// var result bson.M
 	// _, err := client.Database("admin").RunCommand(context.TODO(), bson.D{{"ping", 1}}).Decode(&result)
