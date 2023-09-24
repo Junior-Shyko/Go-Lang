@@ -29,15 +29,16 @@ func CreateAudit(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
 	coll := client.Database("admin").Collection("audit")
-	result, err := coll.InsertOne(context.TODO(), audit)
-	// repo := repositories.NewAuditRepository(coll)
+	result, err := coll.InsertOne(context.Background(), audit)
+	// repo := repositories.NewAuditRepository(client)
 	// err = repo.Create(audit)
-	fmt.Print(err)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Print(result.InsertedID)
+	
 	// w.Write([]byte("Id inserido: %d", usuarioId))
 	
 }

@@ -17,7 +17,7 @@ type AuditRepository struct {
 
 type Audit struct {
 	UserId 			uint64 `json:"user_id"`
-	ObjectId 		string `json:"object_if"`
+	ObjectId 		string `json:"object_id"`
 	ObjectType		string `json:"object_type"`
 	CreateTimeStamp	time.Time `json:"create_timestamp"`
 	Action			string `json:"action"`

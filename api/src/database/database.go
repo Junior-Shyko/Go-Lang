@@ -3,7 +3,8 @@ package database
 
 import (
 	"context"
-	// "fmt"
+	"fmt"
+	"log"
 	// "go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -22,15 +23,14 @@ func ConectionDataBase() (*mongo.Client, error) {
 	// 	Username: "root",
 	// 	Password: "MongoDB2019!",mongodb://localhost:27017
 	//  }
-	client, err := mongo.Connect(context.TODO(),  options.Client().ApplyURI(uri))
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
-		panic(err)
+		fmt.Println("mongo.Connect() ERROR:", err)
+		log.Fatal(err)
 	}
-	defer func() {
-		if err = client.Disconnect(context.TODO()); err != nil {
-			panic(err)
-		}
-	}()
+	
+
 	return client, nil
 	// Send a ping to confirm a successful connection
 	// var result bson.M
