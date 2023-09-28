@@ -21,9 +21,11 @@ func ConectionDataBase() (*mongo.Database, error) {
 	// Create a new client and connect to the server
 	// credential := options.Credential{
 	// 	Username: "root",
-	// 	Password: "MongoDB2019!",mongodb://localhost:27017
+	// 	Password: "MongoDB2019!",
+	// 	//mongodb://localhost:27017
 	//  }
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	//.SetAuth(credential)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		fmt.Println("mongo.Connect() ERROR:", err)
