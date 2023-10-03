@@ -17,11 +17,13 @@ func CreateAudit(c *gin.Context) {
 	//corpo da requisição
 	bodyRequest, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
+		log.Printf("error response: %v", err)
 		log.Fatal(err)
 	}
-
 	var audit models.Audit//instancia com os valores recebidos
+
 	if err = json.Unmarshal(bodyRequest, &audit); err != nil {
+		log.Printf("error instancia: %v", err)
 		log.Fatal(err)
 	}
 	//Conectando com banco

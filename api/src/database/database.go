@@ -19,12 +19,12 @@ func ConectionDataBase() (*mongo.Database, error) {
 	// serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	// opts := options.Client().ApplyURI(uri).SetServerAPIOptions(serverAPI)
 	// Create a new client and connect to the server
-	// credential := options.Credential{
-	// 	Username: "root",
-	// 	Password: "MongoDB2019!",
-	// 	//mongodb://localhost:27017
-	//  }
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	credential := options.Credential{
+		Username: "root",
+		Password: "MongoDB2019!",
+		//mongodb://localhost:27017
+	 }
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017").SetAuth(credential)
 	//.SetAuth(credential)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {

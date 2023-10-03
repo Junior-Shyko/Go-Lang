@@ -17,7 +17,7 @@ type AuditRepository struct {
 
 type Audit struct {
 	UserId 			uint64 `json:"user_id"`
-	ObjectId 		string `json:"object_id"`
+	Registratrion	uint64 `json:"registratrion"`
 	ObjectType		string `json:"object_type"`
 	CreateTimeStamp	time.Time `json:"create_timestamp"`
 	Action			string `json:"action"`
@@ -39,7 +39,7 @@ func (repo AuditRepository) Create(audit models.Audit) (*interface{}, error) {
 	//populando dados para inserir
 	aud := Audit{
 		UserId: audit.UserId,
-		ObjectId: audit.ObjectId,
+		Registratrion: audit.Registratrion,
 		ObjectType: audit.ObjectType,
 		CreateTimeStamp: time.Now(),
 		Action: audit.Action,
